@@ -35,8 +35,9 @@ export default function CursorFlowers() {
 
   useEffect(() => {
     if (!cursorFlowers.enabled) return
-    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
-    if (!fine || prefersReducedMotion()) return
+    // Any mouse counts, even on touchscreen laptops where touch is the "primary" input
+    const hasMouse = window.matchMedia('(any-hover: hover) and (any-pointer: fine)').matches
+    if (!hasMouse || prefersReducedMotion()) return
 
     const mouse = { x: -200, y: -200 }
     const pts = FOLLOW.map(() => ({ x: -200, y: -200, spin: Math.random() * 360 }))
@@ -76,6 +77,10 @@ export default function CursorFlowers() {
     }
 
     const onMove = (e) => {
+      if (e.pointerType && e.pointerType !== 'mouse') {
+        if (visible) show(false) // finger or pen: hide the flowers
+        return
+      }
       mouse.x = e.clientX
       mouse.y = e.clientY
       if (!visible) {
