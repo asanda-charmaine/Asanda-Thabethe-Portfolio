@@ -44,11 +44,11 @@ export default function Hero() {
           <h1
             id="hero-name"
             data-hero="line"
-            className="group mt-1 font-display text-[clamp(2.75rem,2rem+4.2vw,5.75rem)] font-semibold leading-[0.95] tracking-[-0.035em] text-ink"
+            className="mt-1 font-display text-[clamp(2.75rem,2rem+4.2vw,5.75rem)] font-semibold leading-[0.95] tracking-[-0.035em] text-ink"
           >
-            {/* Hovering over the name turns the surname pink */}
+            {/* The surname is always shown in pink */}
             {firstNames}{' '}
-            <span className="transition-colors duration-500 ease-[var(--ease-expo)] group-hover:text-rose">{surname}</span>
+            <span className="text-rose">{surname}</span>
           </h1>
           <p
             data-hero="line"
