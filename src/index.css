@@ -1,0 +1,484 @@
+@import 'tailwindcss';
+
+/* ── Design tokens ────────────────────────────────────────────────────
+   Warm take on the reference palette: cream canvas, brown ink,
+   terracotta accent, soft pastel tints for cards & stickers.          */
+@theme {
+  --color-cream: #f5f0e8;
+  --color-paper: #fffbf4;
+  --color-ink: #2b2420;
+  --color-ink-soft: #5a4e45;
+  --color-ink-muted: #8c7f73;
+  --color-line: rgb(43 36 32 / 0.1);
+
+  --color-terracotta: #c8643b;
+  --color-terracotta-deep: #a94f2b;
+  --color-butter: #f6e3a1;
+  --color-sage: #d6dfc4;
+  --color-blush: #f2d3ca;
+  --color-sky: #d5e5ea;
+  --color-sand: #ecdcc3;
+  --color-peach: #f7dcc6;
+
+  --font-display: 'Bricolage Grotesque', Georgia, serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-hand: 'Caveat', cursive;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Base ─────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-body);
+    background: var(--color-cream);
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-butter);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  /* Sections receive focus after nav jumps; no ring needed there */
+  [tabindex='-1']:focus {
+    outline: none;
+  }
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ── Components ───────────────────────────────────────────────────── */
+@layer components {
+  .skip-link {
+    position: fixed;
+    top: -100px;
+    left: 1rem;
+    z-index: 999;
+    padding: 0.5rem 1rem;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-size: 0.875rem;
+    border-radius: 6px;
+    transition: top 0.3s var(--ease-expo);
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* White floating pill, like a design-tool toolbar */
+  .pill-surface {
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgb(43 36 32 / 0.05);
+  }
+
+  /* Small uppercase section label ("Notion-style" resume headings) */
+  .section-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  /* Marker-pen highlight behind a word */
+  .marker {
+    background-image: linear-gradient(
+      100deg,
+      transparent 0.4em,
+      var(--color-butter) 0.4em,
+      var(--color-butter) calc(100% - 0.2em),
+      transparent calc(100% - 0.2em)
+    );
+    background-size: 100% 0.55em;
+    background-position: 0 88%;
+    background-repeat: no-repeat;
+    padding: 0 0.12em;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-ink-soft);
+    padding: 0.35rem 0.85rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    transition:
+      transform 0.25s var(--ease-expo),
+      border-color 0.25s ease,
+      background 0.25s ease;
+  }
+  .tag:hover {
+    transform: translateY(-2px) rotate(-1.5deg);
+    border-color: rgb(200 100 59 / 0.4);
+    background: #fff;
+  }
+
+  /* Underlined text link with animated underline */
+  .ink-link {
+    position: relative;
+    color: var(--color-ink);
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition:
+      color 0.2s ease,
+      background-size 0.35s var(--ease-expo);
+  }
+  .ink-link:hover {
+    color: var(--color-terracotta);
+    background-size: 0% 1px;
+  }
+
+  /* ── Sticker-style image frame (white border, slight tilt) ── */
+  .sticker-frame {
+    background: #fff;
+    padding: 10px;
+    border-radius: 22px;
+    border: 1px solid var(--color-line);
+    transition: transform 0.5s var(--ease-expo);
+  }
+
+  /* ── Washi-tape strip (used on cards & photos) ── */
+  .tape {
+    position: relative;
+  }
+  .tape::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    width: 78px;
+    height: 24px;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgb(246 227 161 / 0.75);
+    border-left: 1px dashed rgb(43 36 32 / 0.08);
+    border-right: 1px dashed rgb(43 36 32 / 0.08);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .tape--blush::before {
+    background: rgb(242 211 202 / 0.8);
+  }
+  .tape--sage::before {
+    background: rgb(214 223 196 / 0.85);
+  }
+
+  /* ── Work cards ── */
+  .work-card {
+    border: 1px solid rgb(43 36 32 / 0.08);
+    border-radius: 14px;
+    transition:
+      transform 0.5s var(--ease-expo),
+      border-color 0.3s ease,
+      box-shadow 0.5s var(--ease-expo);
+  }
+  .work-card:hover,
+  .work-card:focus-within {
+    transform: translateY(-8px) rotate(0deg) scale(1.015);
+    border-color: rgb(43 36 32 / 0.18);
+    box-shadow: 0 18px 40px -18px rgb(43 36 32 / 0.25);
+  }
+  .work-card .thumb img {
+    transition: transform 0.8s var(--ease-expo);
+  }
+  .work-card:hover .thumb img {
+    transform: scale(1.05);
+  }
+
+  /* Drag-to-scroll gallery */
+  .drag-scroller {
+    cursor: grab;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .drag-scroller::-webkit-scrollbar {
+    display: none;
+  }
+  .drag-scroller.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+  .drag-scroller.is-dragging a {
+    pointer-events: none;
+  }
+
+  /* "Drag / Swipe to explore" hint pill */
+  .drag-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1.1rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-radius: 28px;
+    font-family: var(--font-hand);
+    font-size: 1.15rem;
+    color: var(--color-ink-soft);
+  }
+  .drag-hint svg {
+    width: 18px;
+    height: 18px;
+    animation: dragHintBounce 2s ease-in-out infinite;
+  }
+  @keyframes dragHintBounce {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(7px);
+    }
+  }
+
+  /* ── Play board stickers ── */
+  .play-board {
+    background-color: var(--color-paper);
+    background-image: radial-gradient(rgb(43 36 32 / 0.13) 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+  }
+  .sticker {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-hand);
+    font-weight: 700;
+    color: var(--color-ink);
+    border: 3px solid #fff;
+    box-shadow: 0 6px 16px -8px rgb(43 36 32 / 0.35);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    transition: box-shadow 0.3s ease;
+  }
+  .sticker:hover {
+    box-shadow: 0 12px 24px -10px rgb(43 36 32 / 0.4);
+  }
+  .sticker:active {
+    cursor: grabbing;
+  }
+  .sticker--circle {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    font-size: 1.6rem;
+  }
+  .sticker--pill {
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+    font-size: 1.5rem;
+  }
+  .sticker--blob {
+    padding: 1rem 1.5rem;
+    border-radius: 58% 42% 55% 45% / 52% 60% 40% 48%;
+    font-size: 1.6rem;
+  }
+
+  /* ── Notebook (personal editorial section) ── */
+  .notebook {
+    background-color: var(--color-paper);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 33px,
+      rgb(160 140 110 / 0.14) 33px,
+      rgb(160 140 110 / 0.14) 34px
+    );
+    border: 1px solid var(--color-line);
+    border-radius: 18px;
+  }
+  .notebook-rings span {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgb(160 140 110 / 0.3);
+    background: var(--color-cream);
+  }
+  .scribble-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .scribble-underline::after {
+    content: '';
+    position: absolute;
+    left: -2%;
+    right: -2%;
+    bottom: -6px;
+    height: 10px;
+    background: no-repeat center / 100% 100%
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8 Q50 2 100 7 T197 5' stroke='%23C8643B' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  }
+  .step-illustration {
+    transition: transform 0.5s var(--ease-expo);
+  }
+  .step:hover .step-illustration {
+    transform: rotate(0deg) scale(1.04);
+  }
+
+  /* ── Footer dock (macOS style) ── */
+  .dock-link {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    color: var(--color-ink-soft);
+    transform-origin: bottom center;
+    transition:
+      transform 0.25s var(--ease-expo),
+      color 0.2s ease,
+      background 0.2s ease;
+  }
+  .dock-link svg {
+    width: 22px;
+    height: 22px;
+  }
+  .dock-link:hover,
+  .dock-link:focus-visible {
+    transform: scale(1.25) translateY(-4px);
+    color: var(--color-ink);
+    background: rgb(43 36 32 / 0.05);
+  }
+  /* neighbour magnification */
+  .dock-item:has(+ .dock-item > .dock-link:hover) .dock-link,
+  .dock-item:hover + .dock-item .dock-link {
+    transform: scale(1.1) translateY(-2px);
+  }
+
+  /* Tooltip shared by dock & tools */
+  [data-tooltip] {
+    position: relative;
+  }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    padding: 4px 10px;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.2s ease,
+      transform 0.25s var(--ease-expo);
+  }
+  [data-tooltip]:hover::after,
+  [data-tooltip]:focus-visible::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .tool-item {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    transition:
+      transform 0.25s var(--ease-expo),
+      background 0.2s ease;
+  }
+  .tool-item img {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    object-fit: contain;
+    opacity: 0.85;
+    transition: opacity 0.25s ease;
+  }
+  .tool-item:hover {
+    transform: scale(1.12);
+    background: rgb(43 36 32 / 0.05);
+  }
+  .tool-item:hover img {
+    opacity: 1;
+  }
+}
+
+/* Swap hint text on touch devices */
+.hint-touch {
+  display: none;
+}
+@media (hover: none) and (pointer: coarse) {
+  .hint-mouse {
+    display: none;
+  }
+  .hint-touch {
+    display: inline;
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible focus ring for whole-card links */
+.work-card:has(a:focus-visible) {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 5px;
+}
+
+/* Smaller stickers on phones so the board doesn't feel crowded */
+@media (max-width: 640px) {
+  .sticker--circle {
+    width: 68px;
+    height: 68px;
+    font-size: 1.2rem;
+  }
+  .sticker--pill,
+  .sticker--blob {
+    padding: 0.45rem 1rem;
+    font-size: 1.2rem;
+  }
+}
