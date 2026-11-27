@@ -2,7 +2,7 @@ import { notebook } from '../data/content'
 import Img from './Img'
 import PlayBoard from './PlayBoard'
 
-const tints = ['bg-peach', 'bg-sage', 'bg-butter', 'bg-blush', 'bg-sky']
+const tints = ['bg-petal', 'bg-sage', 'bg-butter', 'bg-blush', 'bg-sky']
 
 /** The "Play" section: sticker board + a notebook-page editorial (recipe-style). */
 export default function Notebook() {
@@ -10,9 +10,7 @@ export default function Notebook() {
   return (
     <section id="play" tabIndex={-1} aria-labelledby="play-heading" className="pb-12 md:pb-16">
       <div className="mx-auto max-w-[920px] px-4 sm:px-6">
-        <div className="border-t border-line pt-12 md:pt-16">
-          <h2 className="section-label mb-6">Play</h2>
-        </div>
+        <div className="border-t border-line pt-12 md:pt-16" />
       </div>
 
       <PlayBoard />
@@ -29,7 +27,7 @@ export default function Notebook() {
           {/* Margin note */}
           <p
             aria-hidden="true"
-            className="absolute right-6 top-8 hidden rotate-[6deg] whitespace-pre-line text-right font-hand text-xl leading-tight text-terracotta md:block"
+            className="absolute right-6 top-8 hidden rotate-[6deg] whitespace-pre-line text-right font-hand text-xl leading-tight text-rose md:block"
           >
             {n.marginNote}
           </p>
@@ -43,7 +41,7 @@ export default function Notebook() {
             <p className="mt-5 whitespace-pre-line font-hand text-xl leading-snug text-ink-soft">{n.subtitleNote}</p>
           </header>
 
-          <p className="max-w-[56ch] border-l-2 border-terracotta/40 pl-4 italic leading-relaxed text-ink-soft">{n.intro}</p>
+          <p className="max-w-[56ch] border-l-2 border-rose/40 pl-4 italic leading-relaxed text-ink-soft">{n.intro}</p>
 
           {/* List */}
           <div className="mt-10">
@@ -51,7 +49,7 @@ export default function Notebook() {
             <ul className="mt-3 space-y-1.5">
               {n.list.map((item, i) => (
                 <li key={i} className="flex flex-wrap items-baseline gap-x-2 text-ink-soft">
-                  <span className="min-w-[4.5rem] font-hand text-xl font-bold text-terracotta">{item.qty}</span>
+                  <span className="min-w-[4.5rem] font-hand text-xl font-bold text-rose">{item.qty}</span>
                   <span>{item.item}</span>
                   {item.aside && <span className="font-hand text-lg text-ink-muted">{item.aside}</span>}
                 </li>
@@ -85,12 +83,13 @@ export default function Notebook() {
                       src={step.image}
                       alt={step.imageAlt}
                       className="aspect-square w-full rounded-[12px] object-cover"
+                      style={step.imagePosition ? { objectPosition: step.imagePosition } : undefined}
                       tint={tints[i % tints.length]}
                       loading="lazy"
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <span className="font-hand text-3xl font-bold leading-none text-terracotta" aria-hidden="true">
+                    <span className="font-hand text-3xl font-bold leading-none text-rose" aria-hidden="true">
                       {i + 1}.
                     </span>
                     <h4 className="mt-1 font-display text-xl font-medium tracking-[-0.01em] text-ink">
@@ -110,7 +109,7 @@ export default function Notebook() {
           {/* Closing */}
           <div className="mt-14 border-t border-dashed border-ink/15 pt-8 text-center">
             <p className="font-display text-lg italic text-ink-soft">{n.closing}</p>
-            <p className="mt-2 font-hand text-3xl text-terracotta">{n.sign}</p>
+            <p className="mt-2 font-hand text-3xl text-rose">{n.sign}</p>
           </div>
         </article>
       </div>

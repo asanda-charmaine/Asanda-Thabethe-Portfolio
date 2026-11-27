@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import { nav, site, hero } from '../data/content'
+import { nav, site } from '../data/content'
 import { asset, scrollToSection } from '../lib/motion'
-import Img from './Img'
-import { HomeIcon, WorkIcon, PlayIcon, UserIcon, MailIcon } from './Icons'
+import { HomeIcon, WorkIcon, UserIcon, MailIcon, FileIcon } from './Icons'
 
-const mobileIcons = { home: HomeIcon, work: WorkIcon, play: PlayIcon, about: UserIcon, contact: MailIcon }
+const mobileIcons = { home: HomeIcon, about: UserIcon, work: WorkIcon, contact: MailIcon, cv: FileIcon }
 
 // Résumé-style sections all count as "About" in the nav.
 const sectionToNav = {
@@ -13,6 +12,7 @@ const sectionToNav = {
   skills: 'about',
   education: 'about',
   events: 'about',
+  play: 'about',
 }
 
 /** Tracks which nav item matches the section currently in view. */
@@ -66,17 +66,17 @@ export default function Header() {
           scrolled ? 'bg-cream/70 backdrop-blur-md' : ''
         }`}
       >
-        <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-4 sm:px-6">
+        <div className="mx-auto grid h-[72px] max-w-[1280px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6">
           {/* Bow logo (public/assets/logo.png), drawn as a mask so it takes the ink colour */}
           <a
             href="#home"
             onClick={(e) => go(e, 'home')}
-            className="group flex items-center gap-2"
+            className="group flex items-center gap-2 justify-self-start"
             aria-label={`${site.name}, back to top`}
           >
             <span
               aria-hidden="true"
-              className="block h-12 w-9 origin-top bg-ink transition-[transform,background-color] duration-500 ease-[var(--ease-expo)] group-hover:-rotate-6 group-hover:scale-110 group-hover:bg-terracotta"
+              className="block h-12 w-9 origin-top bg-ink transition-[transform,background-color] duration-500 ease-[var(--ease-expo)] group-hover:-rotate-6 group-hover:scale-110 group-hover:bg-rose"
               style={{ WebkitMask: logoMask, mask: logoMask }}
             />
             <span className="hidden font-hand text-xl text-ink-soft sm:inline">{site.name.split(' ')[0]}</span>
@@ -102,15 +102,8 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Avatar: jumps to About */}
-          <a
-            href="#about"
-            onClick={(e) => go(e, 'about')}
-            className="h-10 w-10 overflow-hidden rounded-full border-2 border-ink/10 transition-all duration-300 ease-[var(--ease-expo)] hover:scale-110 hover:border-terracotta hover:shadow-[0_2px_12px_rgb(200_100_59/0.3)]"
-            aria-label="About me"
-          >
-            <Img src={hero.image} alt="" className="h-full w-full object-cover" tint="bg-peach" />
-          </a>
+          {/* Empty column keeps the nav centred */}
+          <span aria-hidden="true" />
         </div>
       </header>
 

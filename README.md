@@ -29,16 +29,18 @@ Images live in `public/assets/`. To swap one, **drop your file in with exactly t
 
 | File | Where it shows | Suggested size |
 | --- | --- | --- |
-| `public/assets/profile.png` | Hero portrait and header avatar *(still a placeholder)* | 800 × 800 (square) |
-| `public/assets/about.png` | About Me photo *(still a placeholder)* | 800 × 600 (4:3) |
+| `public/assets/asanda-main.jpg` | Hero portrait (the original full-size photo is kept in `image-originals/`) | portrait, ~900 px wide |
+| `public/assets/asanda-about.jpg` | About Me photo (original kept in `image-originals/`) | portrait 2:3, ~720 px wide |
 | `public/assets/projects/arms.jpg` | ARMS project card | ~1400 px wide |
 | `public/assets/projects/unify-tech.jpg` | Unify Tech handbook card | any; shown whole (`imageFit: 'contain'`) |
-| `public/assets/illustrations/step-1.png` … `step-5.png` | Notebook steps 1–5 *(placeholders)* | 600 × 600 (square) |
+| Notebook step illustrations | Use the cartoon stickers by default; set each step's `image` in `content.js` to your own file (e.g. `assets/illustrations/step-1.png`) | square works best |
 | `public/assets/og-thumbnail.png` | Link preview on social media *(placeholder)* | 1200 × 630 |
 | `public/assets/tools/vscode.png`, `react.png`, `java.png`, `github.png`, `claude.png` | Footer tools row *(placeholders)* | 128 × 128 |
 | `public/assets/logo.png` | Bow logo in the header (black on transparent; recoloured in CSS) | ~300 px tall |
-| `public/assets/favicon.svg` | Browser tab icon: black bow in light mode, white in dark mode | SVG |
+| `public/assets/favicon.svg` | Browser tab icon: pink "a" (light and dark mode). Change the colour in the `.ink` rules | SVG |
 | `public/assets/favicon-32.png`, `apple-touch-icon.png` | Fallback tab icon and phone home-screen icon | 32 and 180 px |
+
+**Adding the CV:** put the PDF in `public/assets/` (for example `asanda-thabethe-cv.pdf`) and set `file: 'assets/asanda-thabethe-cv.pdf'` in the `cv` block of `content.js`. Until then, the Download button shows a "CV coming soon" message.
 
 **Adding a project:** put its screenshot in `public/assets/projects/`, then copy a project block in `content.js`. Use `imageFit: 'cover'` for wide website screenshots, or `'contain'` for covers and portrait images.
 
@@ -58,7 +60,22 @@ Settings live in the `intro` block of `content.js`:
 - `minSeconds` / `maxSeconds`: the timing.
 - `enabled: false`: turns the intro off.
 
-Visitors can press **Skip intro** or **Esc**. The intro is skipped automatically for people with "reduce motion" turned on, and for links that go straight to a section (such as `/#contact`).
+The intro plays on every load and refresh. Visitors can press **Skip intro** or **Esc**. People who have "reduce motion" turned on see a calmer version where the stickers simply fade in.
+
+### Event photos
+
+Each event in the **Events** section can have a pile of photos that visitors shuffle like cards. They can tap or drag the top photo, swipe it on a phone, or press **Shuffle photos**.
+
+- Photos live in `public/assets/events/`. The original full-size files are kept in `image-originals/events/`.
+- List them under `photos` on the event in `content.js`. The first one starts on top. Add `portrait: true` for tall photos.
+
+### Decorative stickers and cursor flowers
+
+- **Margin stickers:** cartoon stickers sit in the page margins and do a little dance (wiggle, jump, spin or boing) with a burst of hearts when clicked.
+  - Choose which sticker goes beside which section, which side, how far down and how big in the `decorStickers` list in `content.js`.
+  - On narrower screens, the ones marked `mobile: true` appear small beside the section titles.
+- **Cursor flowers:** three pink flowers trail the mouse, biggest nearest the cursor. Change the sizes and colours, or turn them off, in `cursorFlowers` in `content.js`.
+  - They only appear with a mouse; they're hidden on touch screens and for reduced-motion users.
 
 ## Project structure
 
@@ -77,7 +94,7 @@ public/assets/          images
 
 ## Design notes
 
-- **Colours** are defined once at the top of `src/index.css` (`--color-cream`, `--color-ink`, `--color-terracotta` and others). Change them there and they update across the site.
+- **Colours** are defined once at the top of `src/index.css` (`--color-cream`, `--color-ink`, `--color-rose` (the pink accent) and others). Change them there and they update across the site.
 - **Fonts** (Google Fonts): *Bricolage Grotesque* for headings, *DM Sans* for body text and *Caveat* for handwritten notes.
 - **Motion:** scroll reveals, a hero intro, a drag-to-scroll Work gallery with inertia, and draggable stickers in Play. All of it is switched off for visitors who have "reduce motion" turned on.
 - **Accessibility:** skip link, semantic landmarks and headings, visible focus states, alt text, keyboard-scrollable gallery with arrow buttons.

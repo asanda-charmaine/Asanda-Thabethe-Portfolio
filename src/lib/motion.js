@@ -37,20 +37,27 @@ export function initSmoothScroll() {
 
 const HEADER_OFFSET = -88
 
-/** Smooth-scrolls to a section by id, then moves keyboard focus to it. */
-export function scrollToSection(id, { immediate = false } = {}) {
+/**
+ * Smooth-scrolls to a section by id, then moves keyboard focus to it.
+ * `onDone` runs once the scroll has finished.
+ */
+export function scrollToSection(id, { immediate = false, onDone } = {}) {
   const el = document.getElementById(id)
   if (!el) return
-  const focus = () => el.focus({ preventScroll: true })
+  const arrive = () => {
+    el.focus({ preventScroll: true })
+    onDone?.()
+  }
 
   if (lenis) {
-    lenis.scrollTo(id === 'home' ? 0 : el, { offset: HEADER_OFFSET, immediate, onComplete: focus })
+    lenis.scrollTo(id === 'home' ? 0 : el, { offset: HEADER_OFFSET, immediate, onComplete: arrive })
   } else {
     const top = id === 'home' ? 0 : el.getBoundingClientRect().top + window.scrollY + HEADER_OFFSET
-    window.scrollTo({ top, behavior: immediate || prefersReducedMotion() ? 'auto' : 'smooth' })
-    focus()
+    const instant = immediate || prefersReducedMotion()
+    window.scrollTo({ top, behavior: instant ? 'auto' : 'smooth' })
+    if (instant) arrive()
+    else setTimeout(arrive, 700)
   }
-  history.replaceState(null, '', `#${id}`)
 }
 
 /** Resolves a path in /public against Vite's base URL. */

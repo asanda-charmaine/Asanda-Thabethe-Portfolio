@@ -14,7 +14,7 @@
  * already processed (and unchanged) are skipped, so it is quick.
  */
 import sharp from 'sharp'
-import { existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { basename, extname, join } from 'node:path'
 
 const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')
@@ -124,6 +124,15 @@ mkdirSync(OUT, { recursive: true })
 const manifest = []
 const used = new Set()
 
+// Which original produced each existing sticker last time (so a renamed or
+// removed original never leaves a stale picture behind)
+let previous = {}
+try {
+  for (const s of JSON.parse(readFileSync(MANIFEST, 'utf8'))) previous[s.src] = s.source
+} catch {
+  previous = {}
+}
+
 for (const f of sources) {
   const base = slug(f)
   let name = base
@@ -131,7 +140,9 @@ for (const f of sources) {
   used.add(name)
   const input = join(SRC, f)
   const output = join(OUT, `${name}.webp`)
-  const fresh = existsSync(output) && statSync(output).mtimeMs >= statSync(input).mtimeMs
+  const src = `assets/stickers/${name}.webp`
+  const fresh =
+    existsSync(output) && previous[src] === f && statSync(output).mtimeMs >= statSync(input).mtimeMs
   let size
   if (fresh) {
     size = await sharp(output).metadata()
@@ -139,7 +150,7 @@ for (const f of sources) {
     size = await processImage(input, output)
     console.log(`[stickers] ✓ ${f}`)
   }
-  manifest.push({ src: `assets/stickers/${name}.webp`, ratio: +(size.height / size.width).toFixed(4) })
+  manifest.push({ src, ratio: +(size.height / size.width).toFixed(4), source: f })
 }
 
 // Remove stickers whose originals were deleted

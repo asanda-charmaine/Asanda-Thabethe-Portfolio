@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { gsap, ScrollTrigger, initSmoothScroll, scrollToSection, prefersReducedMotion } from './lib/motion'
+import { gsap, ScrollTrigger, initSmoothScroll, scrollToSection } from './lib/motion'
 import { intro } from './data/content'
 import IntroLoader from './components/IntroLoader'
 import Header from './components/Header'
@@ -8,13 +8,22 @@ import { AboutPortfolio, AboutMe, Experience, Skills, Education, Events, Contact
 import Projects from './components/Projects'
 import Notebook from './components/Notebook'
 import Footer from './components/Footer'
+import CV from './components/CV'
+import DecorStickers from './components/DecorStickers'
+import CursorFlowers from './components/CursorFlowers'
 
 export default function App() {
   const root = useRef(null)
 
-  // The sticker intro plays on a fresh load. It's skipped for reduced-motion
-  // users and for deep links like /#contact.
-  const [showIntro] = useState(() => intro.enabled && !prefersReducedMotion() && !window.location.hash)
+  // The sticker intro plays on every load and refresh. (Reduced-motion users
+  // get a calmer fade-in version of it; see IntroLoader.)
+  const [showIntro] = useState(() => {
+    if (!intro.enabled) return false
+    // Start from the top so the page doesn't jump to an old scroll position behind the intro
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+    if (!window.location.hash) window.scrollTo(0, 0)
+    return true
+  })
   const [revealed, setRevealed] = useState(!showIntro)
   const onReveal = useCallback(() => setRevealed(true), [])
 
@@ -98,7 +107,9 @@ export default function App() {
   return (
     <>
       {showIntro && <IntroLoader onReveal={onReveal} />}
-      <div ref={root} inert={!revealed}>
+      <CursorFlowers />
+      <div ref={root} inert={!revealed} className="relative">
+        <DecorStickers />
         <Header />
         <main id="main-content" tabIndex={-1}>
           <Hero />
@@ -110,6 +121,7 @@ export default function App() {
           <Education />
           <Events />
           <Contact />
+          <CV />
           <Notebook />
         </main>
         <Footer />

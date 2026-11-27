@@ -4,6 +4,10 @@ import Img from './Img'
 import { ArrowRight } from './Icons'
 
 export default function Hero() {
+  const parts = hero.name.trim().split(/\s+/)
+  const surname = parts.pop()
+  const firstNames = parts.join(' ')
+
   return (
     <section
       id="home"
@@ -18,14 +22,14 @@ export default function Hero() {
             <Img
               src={hero.image}
               alt={hero.imageAlt}
-              className="aspect-square w-full rounded-[14px] object-cover"
-              tint="bg-peach"
+              className="aspect-[4/5] w-full rounded-[14px] object-cover object-top"
+              tint="bg-petal"
               fetchPriority="high"
             />
           </div>
           <p
             data-hero="note"
-            className="absolute -bottom-9 -right-2 rotate-[-6deg] font-hand text-2xl text-terracotta sm:-right-8"
+            className="absolute -bottom-9 -right-2 rotate-[-6deg] font-hand text-2xl text-rose sm:-right-8"
             aria-hidden="true"
           >
             ↖ {hero.stickerNote}
@@ -40,9 +44,11 @@ export default function Hero() {
           <h1
             id="hero-name"
             data-hero="line"
-            className="mt-1 font-display text-[clamp(2.75rem,2rem+4.2vw,5.75rem)] font-semibold leading-[0.95] tracking-[-0.035em] text-ink"
+            className="group mt-1 font-display text-[clamp(2.75rem,2rem+4.2vw,5.75rem)] font-semibold leading-[0.95] tracking-[-0.035em] text-ink"
           >
-            {hero.name}
+            {/* Hovering over the name turns the surname pink */}
+            {firstNames}{' '}
+            <span className="transition-colors duration-500 ease-[var(--ease-expo)] group-hover:text-rose">{surname}</span>
           </h1>
           <p
             data-hero="line"
@@ -60,7 +66,7 @@ export default function Hero() {
                 e.preventDefault()
                 scrollToSection('work')
               }}
-              className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper transition-all duration-300 ease-[var(--ease-expo)] hover:-translate-y-0.5 hover:bg-terracotta"
+              className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper transition-all duration-300 ease-[var(--ease-expo)] hover:-translate-y-0.5 hover:bg-rose"
             >
               See my work
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

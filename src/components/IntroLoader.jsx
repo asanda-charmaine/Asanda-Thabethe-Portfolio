@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { intro, site } from '../data/content'
-import { asset, gsap } from '../lib/motion'
+import { asset, gsap, prefersReducedMotion } from '../lib/motion'
 import stickerList from '../data/stickers.json'
 
 const PRELOAD_TIMEOUT = 5000 // ms to wait for a single image before skipping it
-const placeholderTints = ['#F7DCC6', '#D6DFC4', '#F6E3A1', '#F2D3CA', '#D5E5EA', '#ECDCC3']
+const placeholderTints = ['#F9D5E1', '#D6DFC4', '#F6E3A1', '#F2D3CA', '#D5E5EA', '#ECDCC3']
 
 const rand = (min, max) => min + Math.random() * (max - min)
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v))
@@ -108,6 +108,18 @@ export default function IntroLoader({ onReveal }) {
       exiting.current = true
       tl.current?.kill()
       const out = gsap.timeline({ onComplete: () => setFinished(true) })
+      if (prefersReducedMotion()) {
+        // Calm exit: just fade the overlay away
+        out.to(overlay.current, {
+          opacity: 0,
+          duration: 0.6,
+          onStart: () => {
+            document.documentElement.style.overflow = ''
+            onReveal?.()
+          },
+        })
+        return
+      }
       out
         .to('[data-intro-sticker]', {
           y: -30,
@@ -134,19 +146,26 @@ export default function IntroLoader({ onReveal }) {
     if (!items) return
     const ctx = gsap.context(() => {
       const n = items.length
-      const total = clamp(n * 0.4, intro.minSeconds, intro.maxSeconds)
+      const calm = prefersReducedMotion()
+      const total = calm ? clamp(n * 0.2, 3, 5) : clamp(n * 0.4, intro.minSeconds, intro.maxSeconds)
       const step = total / n
       const count = { v: 0 }
 
       tl.current = gsap.timeline({ onComplete: () => exit() })
       gsap.utils.toArray('[data-intro-sticker]').forEach((el, i) => {
         const r = items[i].rotate
-        tl.current.fromTo(
-          el,
-          { scale: 0, opacity: 0, rotate: r + rand(-25, 25), y: 30 },
-          { scale: 1, opacity: 1, rotate: r, y: 0, duration: 0.55, ease: 'back.out(2.2)' },
-          i * step,
-        )
+        if (calm) {
+          // Reduced motion: stickers simply fade in, one by one
+          gsap.set(el, { rotate: r })
+          tl.current.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'none' }, i * step)
+        } else {
+          tl.current.fromTo(
+            el,
+            { scale: 0, opacity: 0, rotate: r + rand(-25, 25), y: 30 },
+            { scale: 1, opacity: 1, rotate: r, y: 0, duration: 0.55, ease: 'back.out(2.2)' },
+            i * step,
+          )
+        }
       })
       tl.current
         .to(count, {
@@ -220,7 +239,7 @@ export default function IntroLoader({ onReveal }) {
         </p>
         <p className="font-display text-5xl font-semibold leading-none tracking-[-0.04em] text-ink sm:text-7xl">
           <span ref={counter}>0</span>
-          <span className="text-terracotta">%</span>
+          <span className="text-rose">%</span>
         </p>
       </div>
 

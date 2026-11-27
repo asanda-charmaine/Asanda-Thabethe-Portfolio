@@ -4,7 +4,7 @@ import { Draggable, gsap } from '../lib/motion'
 import DragHint from './DragHint'
 
 const colors = {
-  terracotta: 'bg-terracotta text-paper',
+  pink: 'bg-rose text-paper',
   butter: 'bg-butter',
   sage: 'bg-sage',
   blush: 'bg-blush',

@@ -1,8 +1,13 @@
 @import 'tailwindcss';
 
+/* Tailwind v4 only applies `hover:` styles when the device's *primary* input can
+   hover. Touchscreen laptops often report touch as primary, which switched off
+   every hover effect even with a mouse. This makes `hover:` work on any real hover. */
+@custom-variant hover (&:hover);
+
 /* ── Design tokens ────────────────────────────────────────────────────
    Warm take on the reference palette: cream canvas, brown ink,
-   terracotta accent, soft pastel tints for cards & stickers.          */
+   rose-pink accent, soft pastel tints for cards & stickers.          */
 @theme {
   --color-cream: #f5f0e8;
   --color-paper: #fffbf4;
@@ -11,14 +16,14 @@
   --color-ink-muted: #8c7f73;
   --color-line: rgb(43 36 32 / 0.1);
 
-  --color-terracotta: #c8643b;
-  --color-terracotta-deep: #a94f2b;
+  --color-rose: #c93b74;
+  --color-rose-deep: #a82d5e;
   --color-butter: #f6e3a1;
   --color-sage: #d6dfc4;
   --color-blush: #f2d3ca;
   --color-sky: #d5e5ea;
   --color-sand: #ecdcc3;
-  --color-peach: #f7dcc6;
+  --color-petal: #f9d5e1;
 
   --font-display: 'Bricolage Grotesque', Georgia, serif;
   --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -47,7 +52,7 @@
     color: var(--color-ink);
   }
   :focus-visible {
-    outline: 2px solid var(--color-terracotta);
+    outline: 2px solid var(--color-rose);
     outline-offset: 4px;
     border-radius: 6px;
   }
@@ -141,7 +146,7 @@ html.lenis body {
   }
   .tag:hover {
     transform: translateY(-2px) rotate(-1.5deg);
-    border-color: rgb(200 100 59 / 0.4);
+    border-color: rgb(201 59 116 / 0.4);
     background: #fff;
   }
 
@@ -159,7 +164,7 @@ html.lenis body {
       background-size 0.35s var(--ease-expo);
   }
   .ink-link:hover {
-    color: var(--color-terracotta);
+    color: var(--color-rose);
     background-size: 0% 1px;
   }
 
@@ -341,7 +346,7 @@ html.lenis body {
     bottom: -6px;
     height: 10px;
     background: no-repeat center / 100% 100%
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8 Q50 2 100 7 T197 5' stroke='%23C8643B' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8 Q50 2 100 7 T197 5' stroke='%23C93B74' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   }
   .step-illustration {
     transition: transform 0.5s var(--ease-expo);
@@ -465,7 +470,7 @@ html.lenis body {
 
 /* Visible focus ring for whole-card links */
 .work-card:has(a:focus-visible) {
-  outline: 2px solid var(--color-terracotta);
+  outline: 2px solid var(--color-rose);
   outline-offset: 5px;
 }
 
@@ -480,5 +485,201 @@ html.lenis body {
   .sticker--blob {
     padding: 0.45rem 1rem;
     font-size: 1.2rem;
+  }
+}
+
+/* CV "coming soon" dialog */
+.cv-dialog {
+  box-shadow: 0 30px 60px -20px rgb(43 36 32 / 0.35);
+}
+.cv-dialog::backdrop {
+  background: rgb(43 36 32 / 0.35);
+  backdrop-filter: blur(3px);
+}
+.cv-dialog[open] {
+  animation: dialogIn 0.45s var(--ease-expo);
+}
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96) rotate(-1deg);
+  }
+}
+
+/* ── Decorative stickers in the margins ── */
+.decor-sticker {
+  pointer-events: auto;
+  cursor: pointer;
+  opacity: 0;
+  transform: rotate(var(--tilt)) scale(0.3);
+  transition:
+    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.4s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.decor-sticker.is-shown {
+  opacity: 1;
+  transform: rotate(var(--tilt)) scale(1);
+}
+.decor-sticker img {
+  filter: drop-shadow(0 8px 12px rgb(43 36 32 / 0.16));
+  transition: transform 0.35s var(--ease-expo);
+}
+.decor-sticker:hover img {
+  transform: scale(1.07) rotate(-3deg);
+}
+.decor-float {
+  animation: decorFloat 3.6s ease-in-out infinite alternate;
+}
+@keyframes decorFloat {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(-9px) rotate(1.5deg);
+  }
+}
+.decor-heart {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  margin: -0.6em 0 0 -0.35em;
+  font-size: 20px;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Event photo stack ── */
+.photo-card {
+  box-shadow:
+    0 1px 2px rgb(43 36 32 / 0.08),
+    0 14px 28px -12px rgb(43 36 32 / 0.35);
+  touch-action: pan-y;
+  will-change: transform;
+}
+
+/* ── Cursor flowers ── */
+.cursor-flower {
+  transition: opacity 0.3s ease;
+  will-change: transform;
+  filter: drop-shadow(0 2px 3px rgb(236 92 147 / 0.25));
+}
+
+/* ── Girly footer ── */
+.footer-girly {
+  background:
+    radial-gradient(60% 50% at 15% 20%, rgb(255 255 255 / 0.55), transparent 70%),
+    radial-gradient(50% 45% at 85% 75%, rgb(255 214 232 / 0.7), transparent 70%),
+    linear-gradient(180deg, #fdeef4 0%, #f9d6e4 55%, #f5c3d8 100%);
+}
+/* cream scallops hanging over the pink */
+.footer-scallop {
+  background: radial-gradient(circle at 14px 0, var(--color-cream) 13px, transparent 14px) repeat-x;
+  background-size: 28px 20px;
+}
+.footer-marker {
+  background-image: linear-gradient(100deg, transparent 0.3em, #ffffff 0.3em, #ffffff calc(100% - 0.15em), transparent calc(100% - 0.15em));
+  background-size: 100% 0.5em;
+  background-position: 0 88%;
+  background-repeat: no-repeat;
+  color: #d9467f;
+  padding: 0 0.12em;
+}
+.footer-girly .dock-link:hover,
+.footer-girly .dock-link:focus-visible {
+  color: #d9467f;
+  background: #fde4ee;
+}
+.footer-girly [data-tooltip]::after {
+  background: #d9467f;
+}
+.footer-sparkle {
+  color: #ec5c93;
+  opacity: 0.7;
+  animation: twinkle 2.6s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: scale(0.7) rotate(0deg);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scale(1.15) rotate(20deg);
+    opacity: 0.9;
+  }
+}
+
+/* Footer stickers: each keeps moving in its own way */
+.footer-sticker {
+  rotate: var(--tilt);
+  -webkit-tap-highlight-color: transparent;
+}
+.footer-sticker img {
+  transition: transform 0.35s var(--ease-expo);
+}
+.footer-sticker:hover img {
+  transform: scale(1.08);
+}
+.footer-move--sway {
+  transform-origin: 50% 100%;
+  animation: stickerSway 3.2s ease-in-out infinite alternate;
+}
+.footer-move--bob {
+  animation: stickerBob 2.4s ease-in-out infinite alternate;
+}
+.footer-move--wobble {
+  animation: stickerWobble 4s ease-in-out infinite;
+}
+.footer-move--hop {
+  transform-origin: 50% 100%;
+  animation: stickerHop 2.8s ease-in-out infinite;
+}
+@keyframes stickerSway {
+  from {
+    transform: rotate(-6deg);
+  }
+  to {
+    transform: rotate(6deg);
+  }
+}
+@keyframes stickerBob {
+  from {
+    transform: translateY(0) scale(1);
+  }
+  to {
+    transform: translateY(-14px) scale(1.05);
+  }
+}
+@keyframes stickerWobble {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(4deg) translateY(-6px);
+  }
+  50% {
+    transform: rotate(-3deg) translateY(2px);
+  }
+  75% {
+    transform: rotate(3deg) translateY(-4px);
+  }
+}
+@keyframes stickerHop {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  68% {
+    transform: translateY(0) scale(1.08, 0.9);
+  }
+  78% {
+    transform: translateY(-22px) scale(0.95, 1.06);
+  }
+  88% {
+    transform: translateY(0) scale(1.04, 0.96);
   }
 }

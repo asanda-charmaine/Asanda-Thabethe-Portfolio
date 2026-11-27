@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { projects } from '../data/content'
-import { prefersReducedMotion } from '../lib/motion'
+import { gsap, prefersReducedMotion } from '../lib/motion'
 import DragScroller from './DragScroller'
 import DragHint from './DragHint'
 import Img from './Img'
 import { ArrowRight, ArrowUpRight } from './Icons'
 
 // Card tints and tilts cycle so the row feels hand-placed, like a scrapbook.
-const tints = ['bg-[#FBEBD6]', 'bg-[#E3EDEF]', 'bg-[#EFE7F0]', 'bg-[#E6EEDD]']
-const thumbTints = ['bg-peach', 'bg-sky', 'bg-blush', 'bg-sage']
+const tints = ['bg-[#FCE7EF]', 'bg-[#E3EDEF]', 'bg-[#EFE7F0]', 'bg-[#E6EEDD]']
+const thumbTints = ['bg-petal', 'bg-sky', 'bg-blush', 'bg-sage']
 const tilts = ['-rotate-[1.2deg]', 'rotate-[1deg]', '-rotate-[0.8deg]', 'rotate-[1.4deg]']
 const tapes = ['', 'tape--blush', 'tape--sage', '']
 
@@ -28,9 +28,40 @@ function useOverflow(ref) {
   return overflowing
 }
 
+/** Window event fired by "Explore my work" buttons (e.g. in the footer). */
+export const EXPLORE_WORK_EVENT = 'work:explore'
+
 export default function Projects() {
   const scroller = useRef(null)
   const overflowing = useOverflow(scroller)
+
+  // When someone arrives via "Explore my work": the cards hop hello, and if the
+  // gallery is wider than the screen it peeks sideways to show you can drag/swipe it.
+  useEffect(() => {
+    const hello = () => {
+      const el = scroller.current
+      if (!el || prefersReducedMotion()) return
+      gsap.fromTo(
+        el.querySelectorAll('ul > li'),
+        { y: 0 },
+        { y: -18, duration: 0.28, ease: 'power2.out', stagger: 0.08, yoyo: true, repeat: 1, overwrite: 'auto' },
+      )
+      if (el.scrollWidth > el.clientWidth + 4) {
+        const start = el.scrollLeft
+        gsap.to(el, {
+          scrollLeft: Math.min(start + 160, el.scrollWidth - el.clientWidth),
+          duration: 0.7,
+          ease: 'power2.inOut',
+          delay: 0.35,
+          yoyo: true,
+          repeat: 1,
+          repeatDelay: 0.35,
+        })
+      }
+    }
+    window.addEventListener(EXPLORE_WORK_EVENT, hello)
+    return () => window.removeEventListener(EXPLORE_WORK_EVENT, hello)
+  }, [])
 
   const nudge = (dir) => {
     const el = scroller.current
@@ -122,12 +153,12 @@ export default function Projects() {
 
                     {p.highlights?.length > 0 && (
                       <div className="mt-4">
-                        {p.roleLabel && <p className="font-hand text-xl text-terracotta">{p.roleLabel}</p>}
+                        {p.roleLabel && <p className="font-hand text-xl text-rose">{p.roleLabel}</p>}
                         <ul className="mt-1.5 space-y-1.5 text-[0.9rem] leading-relaxed text-ink-soft">
                           {p.highlights.map((h, j) => (
                             <li
                               key={j}
-                              className="relative pl-4 before:absolute before:left-0 before:top-[0.65em] before:h-1.5 before:w-1.5 before:rounded-full before:bg-terracotta/70"
+                              className="relative pl-4 before:absolute before:left-0 before:top-[0.65em] before:h-1.5 before:w-1.5 before:rounded-full before:bg-rose/70"
                             >
                               {h}
                             </li>
@@ -137,7 +168,7 @@ export default function Projects() {
                     )}
 
                     {p.link && (
-                      <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-terracotta" aria-hidden="true">
+                      <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-rose" aria-hidden="true">
                         {p.linkLabel}
                         <ArrowUpRight className="h-4 w-4" />
                       </span>

@@ -18,10 +18,10 @@ export const site = {
 // `target` is the id of the section to scroll to.
 export const nav = [
   { label: 'Home', target: 'home' },
-  { label: 'Work', target: 'work' },
-  { label: 'Play', target: 'play' },
   { label: 'About', target: 'about' },
+  { label: 'Work', target: 'work' },
   { label: 'Contact', target: 'contact' },
+  { label: 'CV', target: 'cv' },
 ]
 
 /* ── 2. Hero ───────────────────────────────────────────────────────── */
@@ -32,22 +32,22 @@ export const hero = {
   tagline: 'Building things',
   highlightWord: 'end to end.',
   subtitle: 'Frontend Developer · Cloud · AI-Integrated Systems',
-  image: 'assets/profile.png',
-  imageAlt: 'Illustrated portrait of Asanda Charmaine Thabethe',
+  image: 'assets/asanda-main.jpg',
+  imageAlt: 'Asanda Charmaine Thabethe smiling, seated in a cream knit jumper',
   stickerNote: 'currently shipping ✦', // handwritten note beside the portrait
 }
 
 /* ── 3. About This Portfolio ───────────────────────────────────────── */
 export const aboutPortfolio = {
   heading: 'About This Portfolio',
-  text: "[PLACEHOLDER] I built this portfolio with AI-assisted development. I started from a mood board and a list of sections, then worked in React, Tailwind CSS and GSAP alongside Claude Code, writing, reviewing and refining every component myself. It was a good test of how AI tools can speed up a developer's workflow without taking over the decisions. Edit this paragraph in src/data/content.js.",
+  text: 'I built this portfolio with AI-assisted development. It started as a mood board full of pinks, stickers and scrapbook textures, and I brought it to life in React, Tailwind CSS and GSAP with Claude Code as my pair programmer. I made the design decisions, reviewed every component and kept tweaking until it felt like me: playful, warm and a little bit girly, but still clean, fast and accessible.',
 }
 
 /* ── 4. About Me ───────────────────────────────────────────────────── */
 export const aboutMe = {
   heading: 'About Me',
-  image: 'assets/about.png',
-  imageAlt: 'Asanda at work, illustration placeholder',
+  image: 'assets/asanda-about.jpg',
+  imageAlt: 'Asanda standing in a grey coat and brown dress, wearing an event lanyard',
   paragraphs: [
     "I'm a Frontend Developer and Computer Science Diploma student at Tshwane University of Technology, finishing in December 2026. I love turning complex problems into interfaces that feel simple, clear and a little bit delightful.",
     'At ICEP in Pretoria I helped build the Timetable and Venue Management System for TUT, working side by side with developers, business analysts and product managers. I care about clean, accessible, responsive UI, and I’m always learning, whether that’s at a hackathon or an event on AI and the future of work.',
@@ -60,7 +60,7 @@ export const experience = {
   entries: [
     {
       role: 'Frontend Developer',
-      date: '[Month YYYY] — [Month YYYY]', // [PLACEHOLDER] add your dates
+      date: 'July 2026 — Present',
       company: 'ICEP',
       location: 'Pretoria',
       summary:
@@ -126,7 +126,7 @@ export const projects = {
       title: 'ARMS',
       subtitle: 'Academic Resource Management System',
       category: 'Web System · TUT',
-      year: '[YYYY]', // [PLACEHOLDER]
+      year: '2026',
       description:
         "ARMS is Tshwane University of Technology's Academic Resource Management System: a web platform that helps the university plan and manage its academic resources. It's built around one simple idea from its landing page: when we manage time better, we make room for success.",
       roleLabel: 'My role: Frontend Developer',
@@ -140,14 +140,14 @@ export const projects = {
       imageAlt: 'ARMS landing page: "Academic Resource Management System" over a photo of students working together',
       imageFit: 'cover',
       imagePosition: 'left center',
-      link: '',
+      link: 'https://arms-frontend-roji.onrender.com/',
       linkLabel: 'View project',
     },
     {
       title: 'Unify Tech',
       subtitle: 'The Developers Handbook',
       category: 'Publication · Team project',
-      year: '[YYYY]', // [PLACEHOLDER]
+      year: '2026',
       description:
         'The Developers Handbook is a guide written by the Unify Tech team: five developers (Vhugala Mathivha, Boitumelo Magashula, Hlulani Ndlovu, Asanda Thabethe and Nyiko Tsonani) sharing what we’ve learned about building software together. Like the puzzle on its cover, each of us brought a different piece.',
       roleLabel: 'My role: Co-author & Frontend Developer',
@@ -159,7 +159,7 @@ export const projects = {
       image: 'assets/projects/unify-tech.jpg',
       imageAlt: 'Cover of Unify Tech: The Developers Handbook, showing the five authors as puzzle pieces',
       imageFit: 'contain',
-      link: '',
+      link: 'https://unify-tech-developers-handbook.onrender.com/',
       linkLabel: 'View project',
     },
     // ── More projects coming soon: copy a block above to add one.
@@ -191,9 +191,18 @@ export const events = {
   entries: [
     {
       title: '8th Annual Tshwane Varsity Hackathon (TVH)',
-      date: '[Month YYYY]', // [PLACEHOLDER]
+      date: '20 — 22 September 2026',
       place: 'Ga-Rankuwa Campus',
       tag: 'Hackathon',
+      // Photos shown as a shuffleable stack. The first one starts on top.
+      // Add portrait: true for tall photos so their card is the right shape.
+      photos: [
+        { src: 'assets/events/tvh-1.jpg', alt: 'Black "HACKER" T-shirt printed with #8thAnnualTVH', portrait: true },
+        { src: 'assets/events/tvh-2.jpg', alt: 'Asanda in a bucket hat taking a playful selfie in the hackathon hall', portrait: true },
+        { src: 'assets/events/tvh-3.jpg', alt: 'Asanda holding a camera and smiling at the hackathon', portrait: true },
+        { src: 'assets/events/tvh-4.jpg', alt: 'Selfie with fellow participants around a table in the hackathon hall' },
+        { src: 'assets/events/tvh-5.jpg', alt: 'Group photo of all the hackathon participants on stage' },
+      ],
       paragraphs: [
         'My team and I were handed a real problem statement and a tight deadline to solve it. We planned our work in sprints, completed every sprint on time and presented a working final project to the judges.',
         "We didn't make it to the finals, but I left with something just as valuable: hands-on experience building at speed alongside other developers, making decisions under pressure and shipping as a team.",
@@ -201,9 +210,13 @@ export const events = {
     },
     {
       title: 'IFOW: Institute for the Future of Work',
-      date: '[Month YYYY]', // [PLACEHOLDER]
+      date: '30 September — 1 October 2026',
       place: 'Menlyn Maine, Pretoria',
       tag: 'Networking & Learning',
+      photos: [
+        { src: 'assets/events/ifow-1.jpg', alt: 'Large group photo of attendees outside the venue at Menlyn Maine' },
+        { src: 'assets/events/ifow-2.jpg', alt: 'Attendees gathered around a table during the event' },
+      ],
       paragraphs: [
         "I connected with business owners and fellow attendees, and learned about small-business start-ups and how they shape (and are shaped by) South Africa's economy.",
         'I also learned how AI actually works, and how to use it responsibly and effectively, something I now bring into the way I build.',
@@ -219,75 +232,96 @@ export const contact = {
   email: 'asandacharmaine465@gmail.com',
   linkedin: 'https://www.linkedin.com/in/asanda-charmaine-thabethe-952a22405/',
   github: 'https://github.com/asanda-charmaine',
-  phone: '+27 00 000 0000', // [PLACEHOLDER] shown as text
-  phoneHref: '+27000000000', // [PLACEHOLDER] digits only, used for tel: link
+  phone: '+27 82 541 5729', // shown as text
+  phoneHref: '+27825415729', // digits only, used for the tel: link
+}
+
+/* ── 9b. CV ─────────────────────────────────────────────────────────── */
+// When the CV is ready: put the PDF in /public/assets/ (e.g. assets/asanda-thabethe-cv.pdf)
+// and set `file` to that path. While `file` is '', the button shows the message below.
+export const cv = {
+  heading: 'CV',
+  intro: 'Want the full picture? Grab a copy of my CV.',
+  buttonLabel: 'Download my CV',
+  file: '', // e.g. 'assets/asanda-thabethe-cv.pdf'
+  unavailableTitle: 'CV coming soon',
+  unavailableMessage: 'Oops, I will attach my updated CV soon. Thank you for Viewing. Please contact me.',
+  contactLabel: 'Contact me',
 }
 
 /* ── 10. "Play" notebook (personal editorial section) ──────────────── */
-// Pick any topic you like: a recipe, a ritual, a how-I-work guide…
+// A recipe-style page about how Asanda builds websites.
 export const notebook = {
-  eyebrow: 'a page from my notebook',
-  title: '[Placeholder Title]',
-  subtitleNote: 'a short, warm line\nabout why this matters to you',
-  marginNote: 'no shortcuts.\njust vibes.',
+  eyebrow: 'a recipe from my desk',
+  title: 'A Lovely Website',
+  subtitleNote: 'the way i build things:\nwith care, colour and a lot of coffee',
+  marginNote: 'no shortcuts.\njust good code.',
   intro:
-    "[PLACEHOLDER] A short, personal intro. Tell people where this comes from and why you love it. Two or three sentences is plenty.",
+    "Every website I build starts the same way: with people, not pixels. This is the recipe I picked up building TUT's Timetable and Venue Management System at ICEP, sprinting through the Tshwane Varsity Hackathon and making this very portfolio. Follow it loosely, and taste as you go.",
   listHeading: "What you'll need:",
   list: [
-    { qty: '1', item: 'placeholder item', aside: '' },
-    { qty: '2', item: 'placeholder items', aside: '(or to taste)' },
-    { qty: 'a pinch', item: 'of something', aside: '' },
-    { qty: '1 cup', item: 'placeholder item', aside: '(the good stuff)' },
-    { qty: 'lots', item: 'of patience', aside: '' },
+    { qty: '1 cup', item: 'HTML & CSS', aside: '(the foundation)' },
+    { qty: '2 tbsp', item: 'JavaScript & React', aside: '' },
+    { qty: 'a handful', item: 'of Tailwind CSS', aside: '(for speed)' },
+    { qty: '1 scoop', item: 'Java & MySQL', aside: '(for the backend bits)' },
+    { qty: 'a pinch', item: 'of GSAP', aside: '(for the sparkle)' },
+    { qty: 'lots', item: 'of curiosity, teamwork & coffee', aside: '' },
   ],
-  listScribble: '^ a little handwritten aside about one of the items',
+  listScribble: '^ the curiosity is not optional. neither is the coffee.',
   stepsHeading: 'How it goes:',
+  // Each step shows a real photo of Asanda. imagePosition (optional) picks which
+  // part of the photo stays in the square frame, e.g. 'center top'.
   steps: [
     {
-      heading: 'Step one placeholder',
-      body: '[PLACEHOLDER] A short description of the first step. Keep it to two or three sentences.',
-      aside: 'a lowercase side note, like a scribble in the margin',
-      image: 'assets/illustrations/step-1.png',
-      imageAlt: 'Illustration for step one',
+      heading: 'Start with the people',
+      body: 'Before writing any code, I listen. I sit with business analysts, product managers and the people who’ll actually use the system, and turn what they need into a clear plan.',
+      aside: 'a great feature starts with a good question',
+      image: 'assets/events/tvh-4.jpg',
+      imageAlt: 'A selfie with fellow participants around a table at the hackathon',
+      imagePosition: 'center',
     },
     {
-      heading: 'Step two placeholder',
-      body: '[PLACEHOLDER] A short description of the second step.',
-      aside: 'another little aside goes here',
-      image: 'assets/illustrations/step-2.png',
-      imageAlt: 'Illustration for step two',
+      heading: 'Sketch the look',
+      body: 'Next comes the fun part: layouts, colours and the little details. I sketch the screens and flows first, so everyone can see the idea before it’s built.',
+      aside: 'pink is always an option',
+      image: 'assets/events/tvh-3.jpg',
+      imageAlt: 'Asanda holding a camera and smiling at the hackathon',
+      imagePosition: 'center 30%',
     },
     {
-      heading: 'Step three placeholder',
-      body: '[PLACEHOLDER] A short description of the third step.',
-      aside: "seriously, don't skip this one",
-      image: 'assets/illustrations/step-3.png',
-      imageAlt: 'Illustration for step three',
+      heading: 'Build it piece by piece',
+      body: 'I build the interface in small, reusable React components, styled with Tailwind CSS and connected to the data behind them. Clean code now means fewer headaches later.',
+      aside: 'headphones on, playlist loaded',
+      image: 'assets/asanda-about.jpg',
+      imageAlt: 'Asanda standing in a grey coat and brown dress, wearing an event lanyard',
+      imagePosition: 'center 20%',
     },
     {
-      heading: 'Step four placeholder',
-      body: '[PLACEHOLDER] A short description of the fourth step.',
-      aside: "you'll know it's right when it feels right",
-      image: 'assets/illustrations/step-4.png',
-      imageAlt: 'Illustration for step four',
+      heading: 'Add the colour & care',
+      body: 'Then I polish: smooth animations, light and dark mode, and making sure it works for everyone, on every screen size, keyboard and screen reader included.',
+      aside: 'accessibility is part of the design, not an extra',
+      image: 'assets/events/tvh-2.jpg',
+      imageAlt: 'Asanda in a bucket hat taking a playful selfie',
+      imagePosition: 'center 30%',
     },
     {
-      heading: 'Step five placeholder',
-      body: '[PLACEHOLDER] A short description of the final step.',
-      aside: 'best enjoyed with good company',
-      image: 'assets/illustrations/step-5.png',
-      imageAlt: 'Illustration for step five',
+      heading: 'Test, ship & celebrate',
+      body: 'Finally I test, fix and review with the team, then ship it on time, sprint by sprint, the way we did at the hackathon. And then I celebrate, of course.',
+      aside: 'the best part? celebrating together',
+      image: 'assets/events/tvh-5.jpg',
+      imageAlt: 'Hackathon participants celebrating together on stage',
+      imagePosition: 'center',
     },
   ],
-  closing: '[PLACEHOLDER] A one-line closing thought.',
+  closing: 'A website is never just code. It’s care you can click on.',
   sign: '— Asanda',
 }
 
 /* ── Play board: draggable stickers above the notebook ─────────────── */
-// `color` is one of: terracotta, butter, sage, blush, sky, sand
+// `color` is one of: pink, butter, sage, blush, sky, sand
 export const stickers = [
   { text: 'hello!', color: 'butter', shape: 'blob', x: 8, y: 10, rotate: -8 },
-  { text: '</>', color: 'terracotta', shape: 'circle', x: 30, y: 52, rotate: 6 },
+  { text: '</>', color: 'pink', shape: 'circle', x: 30, y: 52, rotate: 6 },
   { text: 'ship it', color: 'sage', shape: 'pill', x: 46, y: 8, rotate: -4 },
   { text: 'cloud', color: 'sky', shape: 'blob', x: 68, y: 62, rotate: 9 },
   { text: 'AI + me', color: 'blush', shape: 'pill', x: 10, y: 72, rotate: 5 },
@@ -306,6 +340,40 @@ export const intro = {
   skipLabel: 'Skip intro',
 }
 
+/* ── Decorative stickers around the page ───────────────────────────── */
+// Cartoon stickers that sit in the page margins (click them: they dance!).
+//   sticker: file name in /public/assets/stickers (without .webp)
+//   section: id of the section it sits beside
+//   side:    'left' or 'right' margin
+//   at:      how far down the section, 0 = top, 1 = bottom
+//   size:    width in px on wide screens
+//   mobile:  true = also show a small one beside the section title on phones
+export const decorStickers = [
+  { sticker: 'aesthetic-pink-laptop-coffee-png-sticker', section: 'about-portfolio', side: 'left', at: 0.15, size: 170, rotate: -8, mobile: true },
+  { sticker: 'pink-aesthetic-printable-sticker-in-my-t', section: 'about-portfolio', side: 'right', at: 0.55, size: 160, rotate: 7 },
+  { sticker: 'a-cute-die-cut-sticker-illustration-of-a', section: 'about', side: 'left', at: 0.35, size: 150, rotate: 6, mobile: true },
+  { sticker: 'download-6', section: 'about', side: 'right', at: 0.45, size: 120, rotate: -10 },
+  { sticker: 'cute-die-cut-sticker-illustration-with-b', section: 'experience', side: 'right', at: 0.15, size: 170, rotate: 6, mobile: true },
+  { sticker: 'download-5', section: 'experience', side: 'left', at: 0.6, size: 160, rotate: -7 },
+  { sticker: 'isolated-die-cut-sticker-illustration-of-4', section: 'skills', side: 'left', at: 0.2, size: 160, rotate: -5, mobile: true },
+  { sticker: 'download-7', section: 'skills', side: 'right', at: 0.6, size: 130, rotate: 9 },
+  { sticker: 'a-charming-die-cut-sticker-illustration', section: 'work', side: 'left', at: 0.05, size: 170, rotate: -6 },
+  { sticker: 'isolated-die-cut-sticker-illustration-of', section: 'education', side: 'right', at: 0.2, size: 165, rotate: 6, mobile: true },
+  { sticker: 'a-cute-die-cut-sticker-illustration-of-a-2', section: 'events', side: 'left', at: 0.12, size: 140, rotate: -6, mobile: true },
+  { sticker: 'download-4', section: 'events', side: 'right', at: 0.5, size: 110, rotate: 12 },
+  { sticker: 'isolated-die-cut-sticker-illustration-of-3', section: 'contact', side: 'right', at: 0.25, size: 170, rotate: 5, mobile: true },
+  { sticker: 'a-cute-die-cut-sticker-illustration-of-a-3', section: 'cv', side: 'left', at: 0.1, size: 120, rotate: -7, mobile: true },
+  { sticker: 'isolated-die-cut-sticker-illustration-of-2', section: 'play', side: 'right', at: 0.45, size: 160, rotate: 6 },
+]
+
+/* ── Cursor flowers ────────────────────────────────────────────────── */
+// Three pink flowers that trail the mouse (desktop only). Set enabled: false to turn off.
+export const cursorFlowers = {
+  enabled: true,
+  sizes: [36, 27, 19], // closest to the cursor first
+  colors: ['#EC5C93', '#F48FB1', '#F7B6CF'],
+}
+
 /* ── 11. Footer ────────────────────────────────────────────────────── */
 // Dock icons are built in (LinkedIn, GitHub, Gmail) and use the links
 // from `contact` above. Tool logos: replace the PNGs in /public/assets/tools/.
@@ -320,6 +388,18 @@ export const tools = [
 ]
 
 export const footer = {
-  madeWith: 'made with React, GSAP, Lenis & a little help from Claude',
+  kicker: 'thanks for stopping by, lovely',
+  heading: 'Let’s build something',
+  highlight: 'beautiful',
+  note: 'say hi, send a project, or just share a cute dog photo',
+  madeWith: 'made with love, React, GSAP & a little help from Claude',
+  // Moving stickers in the footer (file names in /public/assets/stickers, without .webp).
+  // motion: 'sway' | 'bob' | 'wobble' | 'hop'. Click them and they dance too.
+  stickers: [
+    { sticker: 'pink-aesthetic-printable-sticker-in-my-t', motion: 'sway', size: 190, x: '11%', y: '18%', rotate: -8 },
+    { sticker: 'download-4', motion: 'bob', size: 120, x: '10%', y: '64%', rotate: 10 },
+    { sticker: 'aesthetic-pink-laptop-coffee-png-sticker', motion: 'wobble', size: 190, x: '80%', y: '16%', rotate: 7 },
+    { sticker: 'a-cute-die-cut-sticker-illustration-of-a-2', motion: 'hop', size: 140, x: '84%', y: '56%', rotate: -6 },
+  ],
   copyright: `© ${new Date().getFullYear()} Asanda Charmaine Thabethe`,
 }

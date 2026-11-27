@@ -1,5 +1,6 @@
 import { aboutPortfolio, aboutMe, experience, skills, education, events, contact } from '../data/content'
 import Img from './Img'
+import PhotoStack from './PhotoStack'
 import { ArrowUpRight, GitHubIcon, LinkedInIcon, MailIcon, PhoneIcon } from './Icons'
 
 /**
@@ -38,17 +39,17 @@ export function AboutPortfolio() {
 export function AboutMe() {
   return (
     <ResumeSection id="about" heading={aboutMe.heading}>
-      <div className="grid items-start gap-8 sm:grid-cols-[minmax(0,1fr)_220px]">
+      <div className="grid items-start gap-8 sm:grid-cols-[minmax(0,1fr)_240px]">
         <div className="space-y-4 text-[1.05rem] leading-relaxed text-ink-soft">
           {aboutMe.paragraphs.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
         </div>
-        <div className="sticker-frame tape tape--sage mx-auto w-[220px] rotate-2 hover:-rotate-1 hover:scale-[1.03] sm:mx-0">
+        <div className="sticker-frame tape tape--sage mx-auto w-[240px] rotate-2 hover:-rotate-1 hover:scale-[1.03] sm:mx-0">
           <Img
             src={aboutMe.image}
             alt={aboutMe.imageAlt}
-            className="aspect-[4/3] w-full rounded-[12px] object-cover"
+            className="aspect-[2/3] w-full rounded-[12px] object-cover"
             tint="bg-sage"
             loading="lazy"
           />
@@ -84,7 +85,7 @@ export function Experience() {
               {job.bullets?.length > 0 && (
                 <ul className="mt-3 space-y-2 text-[0.975rem] leading-relaxed text-ink-soft">
                   {job.bullets.map((b, j) => (
-                    <li key={j} className="relative pl-5 before:absolute before:left-0 before:top-[0.7em] before:h-1.5 before:w-1.5 before:rounded-full before:bg-terracotta/70">
+                    <li key={j} className="relative pl-5 before:absolute before:left-0 before:top-[0.7em] before:h-1.5 before:w-1.5 before:rounded-full before:bg-rose/70">
                       {b}
                     </li>
                   ))}
@@ -153,6 +154,7 @@ export function Events() {
                   <p key={j}>{p}</p>
                 ))}
               </div>
+              {ev.photos?.length > 0 && <PhotoStack photos={ev.photos} label={`Photos from ${ev.title}`} />}
             </Entry>
           </li>
         ))}
@@ -179,14 +181,14 @@ export function Contact() {
             <a
               href={href}
               {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              className="group flex items-center gap-3 rounded-2xl border border-line bg-paper px-4 py-3.5 text-ink transition-all duration-300 ease-[var(--ease-expo)] hover:-translate-y-1 hover:border-terracotta/40 hover:shadow-[0_10px_24px_-14px_rgb(43_36_32/0.35)]"
+              className="group flex items-center gap-3 rounded-2xl border border-line bg-paper px-4 py-3.5 text-ink transition-all duration-300 ease-[var(--ease-expo)] hover:-translate-y-1 hover:border-rose/40 hover:shadow-[0_10px_24px_-14px_rgb(43_36_32/0.35)]"
             >
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-cream text-ink-soft transition-colors group-hover:bg-terracotta group-hover:text-paper">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-cream text-ink-soft transition-colors group-hover:bg-rose group-hover:text-paper">
                 <Icon className="h-[18px] w-[18px]" />
               </span>
               <span className="min-w-0 truncate text-[0.95rem] font-medium">{label}</span>
               {external && <span className="sr-only">(opens in a new tab)</span>}
-              <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-ink-muted transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-terracotta" />
+              <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-ink-muted transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-rose" />
             </a>
           </li>
         ))}
